@@ -983,8 +983,8 @@ void CueControl::updateIndicators() {
                     }
                     break;
                 case TrackAt::End:
-                    // At track end
-                    m_pCueIndicator->setBlinkValue(ControlIndicator::OFF);
+                    // At track end. Next press jumps to Cue point
+                    m_pCueIndicator->setBlinkValue(ControlIndicator::ON);
                     break;
                 case TrackAt::Cue:
                     // Next Press is preview
@@ -992,8 +992,8 @@ void CueControl::updateIndicators() {
                     break;
                 }
             } else {
-                // Cue indicator should be off when freely playing
-                m_pCueIndicator->setBlinkValue(ControlIndicator::OFF);
+                // Cue indicator should be off when freely playing. Next press jumps to Cue point
+                m_pCueIndicator->setBlinkValue(ControlIndicator::ON);
             }
         }
     }

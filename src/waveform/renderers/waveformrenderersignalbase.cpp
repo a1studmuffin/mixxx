@@ -152,52 +152,13 @@ void WaveformRendererSignalBase::setup(const QDomNode& node,
 
 void WaveformRendererSignalBase::getGains(float* pAllGain, float* pLowGain,
                                           float* pMidGain, float* pHighGain) {
-    WaveformWidgetFactory* factory = WaveformWidgetFactory::instance();
-    if (pAllGain != NULL) {
-        float allGain = m_waveformRenderer->getGain();
-        allGain *= factory->getVisualGain(::WaveformWidgetFactory::All);
-        *pAllGain = allGain;
-    }
-
-    if (pLowGain || pMidGain || pHighGain) {
-        // Per-band gain from the EQ knobs.
-        float lowGain(1.0), midGain(1.0), highGain(1.0);
-
-        // Only adjust low/mid/high gains if EQs are enabled.
-        if (m_pEQEnabled->get() > 0.0) {
-            if (m_pLowFilterControlObject &&
-                m_pMidFilterControlObject &&
-                m_pHighFilterControlObject) {
-                lowGain = m_pLowFilterControlObject->get();
-                midGain = m_pMidFilterControlObject->get();
-                highGain = m_pHighFilterControlObject->get();
-            }
-
-            lowGain *= factory->getVisualGain(WaveformWidgetFactory::Low);
-            midGain *= factory->getVisualGain(WaveformWidgetFactory::Mid);
-            highGain *= factory->getVisualGain(WaveformWidgetFactory::High);
-
-            if (m_pLowKillControlObject && m_pLowKillControlObject->get() > 0.0) {
-                lowGain = 0;
-            }
-
-            if (m_pMidKillControlObject && m_pMidKillControlObject->get() > 0.0) {
-                midGain = 0;
-            }
-
-            if (m_pHighKillControlObject && m_pHighKillControlObject->get() > 0.0) {
-                highGain = 0;
-            }
-        }
-
-        if (pLowGain != NULL) {
-            *pLowGain = lowGain;
-        }
-        if (pMidGain != NULL) {
-            *pMidGain = midGain;
-        }
-        if (pHighGain != NULL) {
-            *pHighGain = highGain;
-        }
-    }
+  // Hack: Show constant gain for all waveforms
+  if (pAllGain)
+    *pAllGain = 1.0f;
+  if (pLowGain)
+    *pLowGain = 1.0f;
+  if (pMidGain)
+    *pMidGain = 1.0f;
+  if (pHighGain)
+    *pHighGain = 1.0f;
 }
